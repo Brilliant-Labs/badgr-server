@@ -5,6 +5,26 @@ from mainsite import TOP_DIR
 import logging
 
 
+
+##
+#
+# Database Configuration
+#
+##
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': os.path.join(TOP_DIR, 'local.sqlite3'),                      # Or path to database file if using sqlite3.
+        'USER': 'joaquim',                      # Not used with sqlite3.
+        'PASSWORD': 'Joaquim12',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'OPTIONS': {
+#            "SET character_set_connection=utf8mb3, collation_connection=utf8_unicode_ci",  # Uncomment when using MySQL to ensure consistency across servers
+        },
+    }
+}
 ##
 #
 #  Important Stuff
@@ -122,7 +142,7 @@ TEMPLATES = [
 #
 ##
 
-HTTP_ORIGIN = "http://localhost:8000"
+HTTP_ORIGIN = "https://badgesapi.brilliantlabs.ca"
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -227,7 +247,7 @@ CORS_EXPOSE_HEADERS = (
 ##
 
 MEDIA_ROOT = os.path.join(TOP_DIR, 'mediafiles')
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://badgesapi.brilliantlabs.ca/media/'
 ADMIN_MEDIA_PREFIX = STATIC_URL+'admin/'
 
 
@@ -356,6 +376,7 @@ REST_FRAMEWORK = {
         'entity.authentication.ExplicitCSRFSessionAuthentication',
         # 'rest_framework.authentication.BasicAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
     'DEFAULT_VERSION': 'v1',
     'ALLOWED_VERSIONS': ['v1','v2'],
@@ -470,7 +491,7 @@ BADGERANK_NOTIFY_URL = 'https://api.badgerank.org/v1/badgeclass/submit'
 
 # Feature options
 GDPR_COMPLIANCE_NOTIFY_ON_FIRST_AWARD = True  # Notify recipients of first award on server even if issuer didn't opt to.
-BADGR_APPROVED_ISSUERS_ONLY = False
+BADGR_APPROVED_ISSUERS_ONLY = True
 
 # Email footer operator information
 PRIVACY_POLICY_URL = None
@@ -480,6 +501,16 @@ OPERATOR_STREET_ADDRESS = None
 OPERATOR_NAME = None
 OPERATOR_URL = None
 
+DEFAULT_FROM_EMAIL = 'noreplyblbadges@gmail.com'  # e.g. "noreply@example.com"
+
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'noreplyblbadges@gmail.com'
+EMAIL_HOST_PASSWORD = 'bumfuj-2vyxro-teHsox'
 # OVERRIDE THESE VALUES WITH YOUR OWN STABLE VALUES IN LOCAL SETTINGS
 from cryptography.fernet import Fernet
 PAGINATION_SECRET_KEY = Fernet.generate_key()
@@ -491,3 +522,10 @@ AUTHCODE_EXPIRES_SECONDS = 600  # needs to be long enough to fetch information f
 SAML_EMAIL_KEYS = ['Email', 'mail']
 SAML_FIRST_NAME_KEYS = ['FirstName', 'givenName']
 SAML_LAST_NAME_KEYS = ['LastName', 'sn']
+
+DEBUG = False
+#Secrey
+ALLOWED_HOSTS = ['localhost','badges.brilliantlabs.ca','badgesapi@brilliantlabs.ca' , '127.0.0.1']
+SECRET_KEY = "f2oi3j230c4m20934utcmp24j2c34r24523m2ck4m234c23c"
+UNSUBSCRIBE_SECRET_KEY = str(SECRET_KEY)
+#UNSUBSCRIBE_SECRET_KEY = "dv93xa5biX1QE5AjlGp0VU66n63FOa7i"

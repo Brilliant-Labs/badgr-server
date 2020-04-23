@@ -7,7 +7,7 @@ Pillow==6.2.0
 python-dateutil==2.7.5
 
 # mysql database
-MySQL-python==1.2.5
+#MySQL-python==1.2.5
 
 django-storages==1.6.5
 python-resize-image==1.1.10
@@ -63,7 +63,7 @@ openbadges-bakery==1.0.1
 
 celery==4.1.1
 django-celery-results==1.0.1
-python-json-logger==0.1.2
+#python-json-logger==0.1.2
 
 # SSL Support
 cffi==1.11.5
